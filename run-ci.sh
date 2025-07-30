@@ -33,20 +33,21 @@ cd $PROJ_ROOT
 rm -r "$SNAPSHOT_DIR" || true
 mkdir -p "$SNAPSHOT_DIR"
 
-BUILD_REPO=https://github.com/opencca-user/docker-image-test.git
+BUILD_REPO=https://github.com/opencca/opencca-build.git
 BUILD_DIRNAME=opencca-build
+BUILD_BRANCH=opencca/next
 BUILD_REPO_DIR="$PROJ_ROOT/$BUILD_DIRNAME"
 
 echo ""
 echo "Fetching build environment..."
 
 if [[ ! -d "$BUILD_REPO_DIR" ]]; then
-    git clone --depth 1 "$BUILD_REPO" "$BUILD_REPO_DIR"
+    git clone --branch $BUILD_BRANCH --depth 1 "$BUILD_REPO" "$BUILD_REPO_DIR"
 else 
     echo "Updating build repo..."
     cd "$BUILD_REPO_DIR"
     git fetch origin
-    git reset --hard origin/opencca/main
+    git reset --hard origin/$BUILD_BRANCH
 fi
 
 cd "$BUILD_REPO_DIR/docker"
