@@ -12,12 +12,20 @@ cd $SCRIPT_DIR
 PROJECT_ROOT=/opencca
 SNAPSHOT_DIR=$PROJECT_ROOT/snapshot
 BUILD_DIR=$PROJECT_ROOT/opencca-build
+DEBIAN_OUT=$SNAPSHOT_DIR/debian
+VERSION=-opencca-snapshot-$(date +%Y%m%d)
 
 cd $BUILD_DIR/buildconf
 
-./firmware_opencca.mk rmm
+./linux.mk kernel LOCALVERSION=$VERSION
+./linux.mk debian DEBIAN_RELEASE_DIR=$DEBIAN_OUT LOCALVERSION=$VERSION
 
+echo "snapshots:"
 ls -al $SNAPSHOT_DIR
+
+
+echo "debian packages:"
+ls -al $DEBIAN_OUT
 
 
 
