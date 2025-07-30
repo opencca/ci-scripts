@@ -15,6 +15,7 @@ env:
   CI_REPO: https://github.com/opencca/ci-scripts
   CI_RUN_SCRIPT: run-ci.sh
   CI_BUILD_SCRIPT: build-linux.sh
+  upload-snapshot: false
 
 jobs:
   build-and-push:
@@ -39,6 +40,7 @@ jobs:
     
       - name: Upload snapshot
         uses: actions/upload-artifact@v4
+        if: ${{env.upload-snapshot }}
         with:
           name: linux-snapshot
           path: |

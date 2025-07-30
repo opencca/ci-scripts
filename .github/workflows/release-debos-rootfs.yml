@@ -1,3 +1,4 @@
+
 name: release-debian-rootfs
 
 permissions:
@@ -12,6 +13,10 @@ on:
       clean:
         type: boolean
         default: false
+      dry-run:
+        type: boolean
+        default: true
+
 concurrency:
   group: ${{ github.workflow }}-${{ inputs.branch }}
   cancel-in-progress: true
@@ -33,6 +38,14 @@ jobs:
           submodules: recursive
           clean:  ${{ inputs.clean }}
           path: debian-image-recipes
+      
+      - name: Checkout assets
+        uses: actions/checkout@v4
+        with:
+          repository: opencca/opencca-assets
+          ref: opencca/main
+          clean:  false
+          path: opencca-assets
 
       - name: Run build script
         run: |
@@ -48,14 +61,15 @@ jobs:
             ./debian-image-recipes debian-image-recipes
           output: snapshot/commits.txt
 
-      # - name: Upload snapshot release
-      #   uses: opencca/ci-scripts/.github/release@opencca/main
-      #   with:
-      #     project: linux
-      #     branch: ${{ inputs.branch }}
-      #     artifact: |
-      #       snapshot/commits.txt
-      #       snapshot/debian/*.deb
-      #       snapshot/Image
-      #       snapshot/rk3588-kernel-config
-      #     token: ${{ secrets.RELEASES_REPO_TOKEN }}
+      - name: Upload snapshot release
+        if: ${{ !inputs.dry-run }}
+        uses: opencca/ci-scripts/.github/actions/release@opencca/main
+        with:
+          project: rootfs
+          branch: ${{ inputs.branch }}
+          artifact: |
+            snapshot/commits.txt
+            debian-image-recipes/out/opencca-image-rockchip-rock5b-rk3588.bmap
+            debian-image-recipes/out/opencca-image-rockchip-rock5b-rk3588.img.gz
+            opencca-assets/rk3588/rk3588_spl_loader_v1.08.111.bin
+          token: ${{ secrets.RELEASES_REPO_TOKEN }}

@@ -9,6 +9,9 @@ on:
       branch:
         type: string
         default: opencca/main
+      dry-run:
+        type: boolean
+        default: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ inputs.branch }}
@@ -68,6 +71,7 @@ jobs:
 
       - name: Upload snapshot release
         uses: opencca/ci-scripts/.github/actions/release@opencca/main
+        if: ${{ !inputs.dry-run }}
         with:
           project: firmware
           branch: ${{ inputs.branch }}
