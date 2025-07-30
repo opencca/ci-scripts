@@ -6,9 +6,6 @@ on:
       branch:
         required: true
         type: string
-    secrets:
-      RELEASES_REPO_TOKEN:
-        required: true
 
 concurrency:
   group: ${{ github.workflow }}-${{ inputs.branch }}
