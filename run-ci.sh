@@ -35,7 +35,7 @@ mkdir -p "$SNAPSHOT_DIR"
 
 BUILD_REPO=https://github.com/opencca/opencca-build.git
 BUILD_DIRNAME=opencca-build
-BUILD_BRANCH=opencca/next
+BUILD_BRANCH=opencca/main
 BUILD_REPO_DIR="$PROJ_ROOT/$BUILD_DIRNAME"
 
 echo ""
