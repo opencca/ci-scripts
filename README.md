@@ -43,11 +43,6 @@ jobs:
     uses: opencca/ci-scripts/.github/workflows/build-kvmtool.yml@opencca/main
     with:
       branch: ${{ github.ref_name }}
-    secrets:
-      RELEASES_REPO_TOKEN: ${{ secrets.RELEASES_REPO_TOKEN }}
-
-# RELEASES_REPO_TOKEN is a secret to gain write access to opencca-releases
-# Currently the build workflows do not commit to releases. So this is not needed.
 ```
 
 **CI Jobs:**
