@@ -31,6 +31,23 @@ jobs:
           clean: true
           path: u-boot
 
+      - name: Checkout tfa
+        uses: actions/checkout@v4
+        with:
+          repository: opencca/arm-trusted-firmware
+          ref: opencca/main
+          clean: true
+          path: trusted-firmware-a
+
+      - name: Checkout rmm
+        uses: actions/checkout@v4
+        with:
+          repository: opencca/tf-rmm
+          ref: opencca/main
+          submodules: recursive
+          clean: true
+          path: tf-rmm
+
       - name: Run build script
         run: |
           rm -rf .ci || true
