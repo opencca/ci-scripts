@@ -1,0 +1,15 @@
+[Unit]
+Description=GitHub Actions Runner
+After=network.target
+
+[Service]
+User=opencca
+WorkingDirectory=/home/opencca/opencca/actions-runner
+ExecStart=/home/opencca/opencca/actions-runner/run.sh
+Restart=always
+RestartSec=20s
+KillMode=process
+TimeoutStopSec=60
+
+[Install]
+WantedBy=multi-user.target
